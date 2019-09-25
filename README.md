@@ -1,4 +1,4 @@
-# human_resource_management
+# Human Resource Management
 
 ## Project setup
 ```
