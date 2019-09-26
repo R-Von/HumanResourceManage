@@ -1,0 +1,69 @@
+.loginWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.loginWrap .contentWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 75%;
+  height: 60%;
+  margin: 0 auto;
+}
+
+.contentWrap .leftSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+}
+
+.leftSide .loginBg {
+  width: 100%;
+  height: auto;
+}
+
+.contentWrap .loginForm {
+  width: 50%;
+  height: 30rem;
+  border-radius: 0.5rem;
+  box-shadow: -2px -2px 45px #ddd;
+}
+
+.loginForm .title {
+  width: 100%;
+  height: 5rem;
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.title .logo {
+  height: 100%;
+}
+
+.title .name {
+  height: 50%;
+  margin-left: 0.8rem;
+}
+
+.loginForm .dataWrap {
+  width: 50%;
+  height: auto;
+  margin: 3rem auto;
+}
+
+#components-form-demo-normal-login .login-form {
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.dataWrap .ant-btn-primary {
+  width: 100%;
+}
