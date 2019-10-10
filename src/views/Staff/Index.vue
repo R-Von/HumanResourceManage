@@ -1,6 +1,6 @@
 <template>
   <a-card>
-    打卡
+    员工管理
   </a-card>
 </template>
 
@@ -8,9 +8,9 @@
 import { Vue , Component } from 'vue-property-decorator'
 
 @Component 
-export default class Sign extends Vue{
+export default class Staff extends Vue{
   private mounted(){
-    console.log('SignIn  Index')
+    console.log('Staff  Index')
   }
 }
 </script>

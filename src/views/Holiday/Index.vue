@@ -1,6 +1,6 @@
 <template>
   <a-card>
-    打卡
+    请假申请
   </a-card>
 </template>
 
@@ -8,9 +8,9 @@
 import { Vue , Component } from 'vue-property-decorator'
 
 @Component 
-export default class Sign extends Vue{
+export default class Holiday extends Vue{
   private mounted(){
-    console.log('SignIn  Index')
+    console.log('Holiday  Index')
   }
 }
 </script>

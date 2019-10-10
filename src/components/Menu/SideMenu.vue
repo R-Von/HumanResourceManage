@@ -8,13 +8,27 @@
       <Logo title="HRM"/>
       <a-menu
       style="padding: 16px 0px;"
-      @click="handleClick"
-      :defaultSelectedKeys="['1']"
+      :defaultSelectedKeys="selectedKeys"
       :openKeys.sync="openKeys"
       mode="inline"
       theme="dark"
     >
-      <a-sub-menu key="sub1" @titleClick="titleClick">
+    <template v-for="menu in menus">
+      <a-sub-menu :key="menu.meta.key">
+        <span slot="title">
+          <a-icon :type="menu.meta.icon" />
+          <span>{{menu.name}}</span>
+        </span>
+        <template v-for="item in menu.children">
+          <a-menu-item :key="item.meta.key">
+            <router-link :to="item.path">
+              {{item.name}}
+            </router-link>
+          </a-menu-item>
+        </template>
+      </a-sub-menu>
+    </template>
+      <!-- <a-sub-menu key="sub1" @titleClick="titleClick">
         <span slot="title"><a-icon type="home" /><span>考勤管理</span></span>
         <a-menu-item key="1">打卡</a-menu-item>
         <a-menu-item key="2">加班申请</a-menu-item>
@@ -36,14 +50,34 @@
         <a-menu-item key="6">纪念日</a-menu-item>
         <a-menu-item key="7">节假日</a-menu-item>
       </a-sub-menu>
+       <a-sub-menu key="sub6" @titleClick="titleClick">
+        <span slot="title"><a-icon type="database" /><span>测试组件</span></span>
+        <a-menu-item key="8">
+          <router-link to="/test/testA">
+            测试组件A
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="9">
+          <router-link to="/test/testB">
+            测试组件B
+          </router-link>          
+        </a-menu-item>
+      </a-sub-menu> -->
     </a-menu>
   </a-layout-sider>
 </template>
 
 <script lang="ts">
 
-import { Component , Vue } from 'vue-property-decorator'
+import { Component , Vue , Watch } from 'vue-property-decorator'
 import Logo from '../Tools/Logo.vue'
+import { asyncRouterMap } from '../../routers/config'
+
+
+// console.log(asyncRouterMap)
+// const menus = asyncRouterMap[0].children
+
+// console.log(menus)
 
 @Component({
   components: {
@@ -51,19 +85,19 @@ import Logo from '../Tools/Logo.vue'
   }
 })
 export default class SideMenu extends Vue{
-  
-  current = ['mail']
   openKeys = ['sub1']
+  selectedKeys = ['1']
   collapsed = false
+  menus = []
 
-  handleClick (e:any) {
-    console.log('click', e)
+  // handleClick (e:any) {
+  //   console.log('click', e)
+  // }
+  private created() {
+    this.menus = asyncRouterMap[0].children
+    this.openKeys = [this.$route.matched[1].meta.key]
+    this.selectedKeys = [this.$route.meta.key]
   }
-
-  titleClick (e:any) {
-    console.log('titleClick', e)
-  }
-
 }
 
 </script>
