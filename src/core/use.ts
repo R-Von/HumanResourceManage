@@ -11,7 +11,7 @@ const storageOptions = {
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
-import './component-use'
+import './component-use.ts'
 
 Vue.use(Antd)
 

@@ -45,7 +45,7 @@ const actions:ActionTree<any,any> = {
       let info:object = {
         name:'Admin',
         id:1,
-        avastar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
+        avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
       }
       commit('SET_ROLES',permission)
       commit('SET_INFO',info)
@@ -62,31 +62,13 @@ const actions:ActionTree<any,any> = {
   }
 }
 
+const namespaced:boolean = true
+
 const user = {
+  // namespaced,
   state,
   actions,
   mutations
 }
-
-
-// const user = {
-//   state:{
-//     token:'',
-//     name:'',
-//     avastar:'',
-//     roles:[]
-//   },
-//   mutations:{
-//     SET_TOKEN(state,token){
-//       state.token = token
-//     },
-//     SET_ROLES(){
-
-//     }
-//   },
-//   actions:{
-
-//   }
-// }
 
 export default user

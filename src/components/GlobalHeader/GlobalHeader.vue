@@ -1,21 +1,10 @@
 <template>
     <a-layout-header :style="{ background: '#fff', padding: 0 }">
-      <a-dropdown>
-        <a class="ant-dropdown-link" href="#">
-          User <a-icon type="down" />
-        </a>
-        <a-menu slot="overlay">
-          <a-menu-item>
-            <a href="javascript:;">User Info</a>
-          </a-menu-item>
-          <a-menu-item>
-            <a href="javascript:;">User Setting</a>
-          </a-menu-item>
-          <a-menu-item>
-            <a href="javascript:;" @click="logout">Log out</a>
-          </a-menu-item>
-        </a-menu>
-      </a-dropdown>
+   
+      <div class="header">
+        <user-menu />
+      </div>
+
     </a-layout-header>
 </template>
 
@@ -23,8 +12,13 @@
   
   import { Vue , Component } from 'vue-property-decorator'
   import { fakeAuth } from '../../utils/fakeAuth'
+  import UserMenu from '../Tools/UserMenu.vue'
 
-  @Component
+  @Component({
+    components:{
+      UserMenu
+    }
+  })
   export default class GlobalHeader extends Vue{
     public logout(){
       this.$store.dispatch('Logout').then(()=>{
@@ -37,5 +31,8 @@
 </script>
 
 <style lang="scss" scoped>
-
+.header{
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
 </style>

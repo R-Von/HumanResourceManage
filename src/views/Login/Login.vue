@@ -101,8 +101,6 @@
   export default class Login extends Vue{
     // private form:any =  this.$form.createForm(this)
     private form:any
-
-
     login(){
       // console.log(this.$store)
       let info:object = {

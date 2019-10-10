@@ -1,6 +1,5 @@
 import router from '../router'
 import store from '../store';
-
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // progress bar style
 import {fakeAuth} from '../utils/fakeAuth'
@@ -17,14 +16,12 @@ router.beforeEach((to,from,next)=>{
       next({path:'/dashboard/workplace'})
       NProgress.done()
     }else{
-
+      // console.log(store)
       if(store.getters.roles.length===0){
-
         store.dispatch('GetInfo').then(()=>{
           router.addRoutes(asyncRouterMap)
           next({...to,replace:true})
         })
-
       }else{ 
 
         next()
