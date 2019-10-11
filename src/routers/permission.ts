@@ -16,20 +16,22 @@ router.beforeEach((to,from,next)=>{
       next({path:'/dashboard/workplace'})
       NProgress.done()
     }else{
-      // console.log(store)
+      console.log(store.getters)
       if(store.getters.roles.length===0){
-        store.dispatch('GetInfo').then(()=>{
+        store.dispatch('SetInfo').then(res=>{
+          console.log(res)
           router.addRoutes(asyncRouterMap)
           next({...to,replace:true})
+        }).catch(()=>{
+          console.log('error')
         })
       }else{ 
-
+        console.log(1)
         next()
-
+        console.log(2)
       }
     }
   }else{
-    console.log(to)
     //未登录
     if(whiteList.includes(to.meta.name)){
       // 免登陆 白名单直接通过  

@@ -26,34 +26,46 @@ const mutations:MutationTree<any> = {
 
 const actions:ActionTree<any,any> = {
   Login({ commit } , userInfo){
-    return new Promise(( resolve , reject )=>{
+    return new Promise(( resolve )=>{
       // fakeAuth
       let token:string = `9fjew7n2m5as2k`
       fakeAuth.setToken(token)
       console.log(token)
       commit('SET_TOKEN',token)
-      resolve('200')
+      resolve('login 200')
     })
   },
   GetInfo({ commit }){
-    return new Promise(( resolve , reject )=>{
+    return new Promise(( resolve )=>{
       // let permission = ['dashboard','signup']
       let permission:string[] = ['dashboard','signup']
-       
-      fakeAuth.setRole(permission)
-      commit('SET_ROLES',permission)
       let info:object = {
         name:'Admin',
         id:1,
         avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
       }
+      fakeAuth.setRole(permission)
       commit('SET_ROLES',permission)
       commit('SET_INFO',info)
       resolve()
     })
   },
+  SetInfo({commit}){
+    return new Promise((resolve)=>{
+      let permission:string[] = ['dashboard','signup']
+      let info:object = {
+        name:'Admin',
+        id:1,
+        avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
+      }
+      fakeAuth.setRole(permission)
+      commit('SET_ROLES',permission)
+      commit('SET_INFO',info)
+      resolve('set_info 200')
+    })
+  },
   Logout({commit}){
-    return new Promise(( resolve , reject )=>{
+    return new Promise(( resolve )=>{
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       fakeAuth.signOut()

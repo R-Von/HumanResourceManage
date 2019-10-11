@@ -124,9 +124,15 @@ export const asyncRouterMap:routerItem[] = [
         children:[
           {
             path:'/staff/index',
+            name:'员工列表',
+            component:()=>import(/* webpackChunkName: "user" */ '@/views/Staff/Index.vue'),
+            meta:{ title:'员工列表',permission:['staff'],name:'staffindex',key:'5'}
+          },
+          {
+            path:'/staff/quit',
             name:'离职申请',
             component:()=>import(/* webpackChunkName: "user" */ '@/views/Staff/Index.vue'),
-            meta:{ title:'离职申请',permission:['staff'],name:'staffindex',key:'5'}
+            meta:{ title:'离职申请',permission:['staff'],name:'staffindex',key:'6'}
           }
         ]
       },
@@ -141,7 +147,7 @@ export const asyncRouterMap:routerItem[] = [
             path:'/notice/index',
             name:'节假日',
             component:()=>import(/* webpackChunkName: "user" */ '@/views/Notice/Index.vue'),
-            meta:{ title:'节假日日',permission:['notice'],name:'holidayindex',key:'6'}
+            meta:{ title:'节假日日',permission:['notice'],name:'holidayindex',key:'7'}
           }
         ]
       },
@@ -156,13 +162,13 @@ export const asyncRouterMap:routerItem[] = [
             path:'/test/testA',
             name:'测试组件A',
             component:()=>import(/* webpackChunkName: "user" */ '@/views/Test/TestA.vue'),
-            meta:{ title:'测试组件A',permission:['test'],name:'testA',key:'7'}
+            meta:{ title:'测试组件A',permission:['test'],name:'testA',key:'8'}
           },
           {
             path:'/test/testB',
             name:'测试组件B',
             component:()=>import(/* webpackChunkName: "user" */ '@/views/Test/TestB.vue'),
-            meta:{ title:'测试组件B',permission:['test'],name:'testB',key:'8'}
+            meta:{ title:'测试组件B',permission:['test'],name:'testB',key:'9'}
           }
         ]
       }

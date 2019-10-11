@@ -10,8 +10,8 @@
          </div>
           <slot name="pageInfo" />
           <slot name="userInfo" />
-          <div class="row action" v-if="this.$slots.action">
-            <slot name="action" />
+          <div class="row action" v-if="this.$slots.actions">
+            <slot name="actions" />
           </div>
         </div>
       </div>

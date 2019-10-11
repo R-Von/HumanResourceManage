@@ -1,7 +1,4 @@
 <template>
-  <!-- <div>
-    TestA
-  </div> -->
   <a-card :bordered="false" :body-style="{padding:'24px 32px'}">
     Test A
   </a-card>

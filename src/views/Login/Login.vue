@@ -4,7 +4,7 @@
     id="components-form-demo-normal-login"
     :form="form"
     class="login-form"
-    @submit="handleSubmit"
+    
   >
     <a-form-item>
       <a-input
@@ -67,7 +67,7 @@
   <a-button
       type="primary"
       class="login-form-button"
-      @click="login"
+      @click="logedin"
     >
       Log in
     </a-button>
@@ -79,7 +79,8 @@
 
   import { Vue , Component } from 'vue-property-decorator'
   import { fakeAuth } from '@/utils/fakeAuth'
-  import { mapActions } from 'vuex'
+  import { Action } from 'vuex-class'
+  // import { mapActions } from 'vuex'
   // import 
   // /**
   //  * 定义登陆表单数据
@@ -99,42 +100,22 @@
 
   @Component
   export default class Login extends Vue{
-    // private form:any =  this.$form.createForm(this)
+
+    @Action('Login') Logins:any
     private form:any
-    login(){
-      // console.log(this.$store)
-      let info:object = {
-        account:'admin',
-        password:'123'
-      }
-      this.$store.dispatch('Login',info).then(res=>{
-        this.$router.push({name:'dashboard'})
-        // console.log(res)
-        // console.log(this.$store)
-      })
-    }
 
-    handleSubmit (e:any) {
-      
+    logedin(){
+
       let info:object = {
         account:'admin',
         password:'123'
       }
-      this.$store.dispatch('Login',info).then(res=>{
-        // this.$router.push({name:'dashboard'})
+
+      this.Logins(info).then(res=>{
         console.log(res)
+        this.$router.push('/')
       })
 
-      // e.preventDefault();
-      // this.form.validateFields((err:any, values:object) => {
-      //   if (!err) {
-      //     let token:string = `9fjew7n2m5as2k`
-      //     fakeAuth.setToken(token)
-      //     // let redirects:any = this.$route.query.redirect?this.$route.query.redirect:'/'
-      //     this.$router.push({name:'dashboard'})
-
-      //   }
-      // })
     }
 
     private beforeCreate(){

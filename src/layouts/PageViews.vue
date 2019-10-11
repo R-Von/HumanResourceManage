@@ -1,16 +1,23 @@
 <template>
   <div class="pageView">
     <page-header>
-      <h1 slot="pageTitle" class="title" v-if="pageTitle">
+      <h1 slot="pageTitle" class="title" v-if="pageTitle&&!$slots.userInfo">
         {{pageTitle}}
+        {{$refs.info}}
       </h1>
       <div slot="pageInfo" v-if="description">
         <p>{{description}}</p>
       </div>
+      <slot name="userInfo" slot="userInfo" ></slot>
+      <slot name="actions" slot="actions" ></slot>
+
+      <!-- <slot></slot> -->
     </page-header>
     <div class="content">
       <div class="page-header-index-wide">
-        <router-view ref="content" />
+        <slot>
+          <router-view ref="content" />
+        </slot>
       </div>  
     </div>
   </div>  
@@ -33,19 +40,21 @@ export default class pageViews extends Vue{
 
   getPageInfo(){
     this.pageTitle = this.$route.meta.title
-    // console.log(this.$refs.content)
-    // console.log(this.$refs.content.description)
     const content:any = this.$refs.content
-    this.description = content.description||''
+    if(content){
+      this.description = content.description||''
+    }
+    
+    // const info:any = this.$slots.userInfo
+    // console.log(info)
+
   }
 
   private updated() {
     this.getPageInfo()
-    // console.log('update')
   }
   private mounted() {
     this.getPageInfo()
-    // console.log('mounted')
   }
 }
 
