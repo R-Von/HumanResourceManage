@@ -1,11 +1,5 @@
 <template>
   <div class="calendar-box">
-    <!-- <div class="calendar-header">
-     <p class="cal-hd_title"> {{Dates}}考勤日历</p>
-     <div class="cal-hd_extra">
-
-     </div>
-    </div> -->
     <a-row class="calendar-header">
       <p class="cal-hd_title"> {{Dates}}考勤日历</p>
       <div class="cal-hd_extra">
@@ -31,19 +25,27 @@
         </a-row>
       </div>
     </a-row>
-    <a-calendar :validRange="validRanges">
+    <a-calendar 
+      :validRange="validRanges"  
+      @select="dateSelect" 
+    >
       <ul class="events" slot="dateCellRender" slot-scope="value">
-        <li v-for="item in getListData(value)" :key="item.content">
+        <li v-for="(item,index) in getListData(value)" :key="index">
           <a-badge :status="item.type" :text="item.content" />
         </li>
       </ul>
-      <!-- <template slot="monthCellRender" slot-scope="value">
-        <div v-if="getMonthData(value)" class="notes-month">
-          <section>{{getMonthData(value)}}</section>
-          <span>Backlog number</span>
-        </div>
-      </template> -->
     </a-calendar>
+
+    <a-modal
+      title="Basic Modal"
+      v-model="visible"
+      @ok="handleOk"
+    >
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+
   </div>
   
 </template>
@@ -56,14 +58,16 @@ import { Vue , Component } from 'vue-property-decorator'
 
 @Component
 export default class Calendar extends Vue{
+  visible:boolean = false
   get Dates():string{
     var date = new Date();
     return `${date .getFullYear()}年${date .getMonth()+1}月`
   }
   validRanges = [moment().startOf('month'),moment()]
   listDatas:any = []
+  defaultValues:any = moment().endOf('month')
 
-  setListDatas(){
+  setListDatas():void{
     let state = [
       {
         type:'success',
@@ -85,16 +89,29 @@ export default class Calendar extends Vue{
       this.listDatas.push(data)
     }
 
-    console.log(this.listDatas)
-
   }
 
-  getListData(value:any) {
-    // console.log(value())
-    console.log(this.listDatas[value.date()-1])
+  getListData(value:any){
+    if(value.month()!==new Date().getMonth()){
+      return []
+    }
     return this.listDatas[value.date()-1]
   }
 
+  dateSelect(value:any):void{
+    let state = this.listDatas[value.date()-1]
+    console.log(state)
+    this.visible = true
+  }
+
+  showModal() {
+    this.visible = true
+  }
+
+  handleOk(e:any) {
+    console.log(e);
+    this.visible = false
+  }
 
   private mounted(){
     this.setListDatas()
