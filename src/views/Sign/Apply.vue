@@ -6,8 +6,13 @@
 
 <script lang="ts">
 import { Vue , Component } from 'vue-property-decorator'
+import { PageViews } from '@/layouts'
 
-@Component 
+@Component({
+  components:{
+    PageViews
+  }
+})
 export default class Apply extends Vue{
   private mounted(){
     console.log('Sign Apply')

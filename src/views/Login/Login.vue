@@ -4,7 +4,7 @@
     id="components-form-demo-normal-login"
     :form="form"
     class="login-form"
-    
+    @submit="handleSubmit"
   >
     <a-form-item>
       <a-input
@@ -55,22 +55,22 @@
       >
         Forgot password
       </a>
-      <!-- <a-button
+      <a-button
         type="primary"
         html-type="submit"
         class="login-form-button"
       >
         Log in
-      </a-button> -->
+      </a-button>
     </a-form-item>
   </a-form>
-  <a-button
+  <!-- <a-button
       type="primary"
       class="login-form-button"
       @click="logedin"
     >
       Log in
-    </a-button>
+    </a-button> -->
 </div>
  
 </template>
@@ -104,18 +104,33 @@
     @Action('Login') Logins:any
     private form:any
 
-    logedin(){
+    handleSubmit(e){
+       e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log(values)
+          let info:object = {
+            account:values.userName,
+            password:values.password
+          }
 
-      let info:object = {
-        account:'admin',
-        password:'123'
-      }
-
-      this.Logins(info).then(res=>{
-        console.log(res)
-        this.$router.push('/')
+          this.Logins(info).then(res=>{
+            this.$router.push('/')
+            this.$notification['success']({
+              message: '登陆成功',
+              description: '欢迎回来',
+              duration: 8
+            })
+          }).catch(err=>{
+            console.log(err)
+            this.$notification['error']({
+              message: '错误',
+              description:err.message||'请求出现错误，请稍后再试',
+              duration: 4
+            })
+          })
+        }
       })
-
     }
 
     private beforeCreate(){

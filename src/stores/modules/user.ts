@@ -1,6 +1,8 @@
 import { ActionTree , MutationTree } from 'vuex'
 import { fakeAuth } from '../../utils/fakeAuth'
 import { User } from '@/interface'
+import { login } from '@/request/api/user'
+
 
 const state:User = {
   id: '',
@@ -26,13 +28,19 @@ const mutations:MutationTree<any> = {
 
 const actions:ActionTree<any,any> = {
   Login({ commit } , userInfo){
-    return new Promise(( resolve )=>{
-      // fakeAuth
-      let token:string = `9fjew7n2m5as2k`
-      fakeAuth.setToken(token)
-      console.log(token)
-      commit('SET_TOKEN',token)
-      resolve('login 200')
+    return new Promise(( resolve , reject )=>{
+      login(userInfo).then((res:any)=>{
+        if(res.code === 200){
+          let token:string = res.data.token
+          fakeAuth.setToken(token)
+          commit('SET_TOKEN',token)
+          resolve(200)
+        }else{
+          reject(res)
+        }
+      }).catch(err=>{
+        reject('error')
+      })
     })
   },
   GetInfo({ commit }){
@@ -46,7 +54,7 @@ const actions:ActionTree<any,any> = {
       }
       fakeAuth.setRole(permission)
       commit('SET_ROLES',permission)
-      commit('SET_INFO',info)
+      // commit('SET_INFO',info)
       resolve()
     })
   },
