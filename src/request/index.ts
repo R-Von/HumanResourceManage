@@ -3,6 +3,22 @@ import axios , { AxiosResponse , AxiosRequestConfig } from 'axios';
 import Vueaxios from 'vue-axios';
 
 
+axios.interceptors.request.use((config:any)=>{
+  console.log(config)
+  let token:string = localStorage.loginToken||''
+  config.headers.accessToken = token
+  if(config.data){
+    config.data.accessToken = token
+  }else{
+    config.data = {
+      accessToken:token
+    }
+  }
+  
+  return config
+})
+
+
 axios.interceptors.response.use((res:any)=>{
   return res.data
 })

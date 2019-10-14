@@ -17,7 +17,11 @@ router.beforeEach((to,from,next)=>{
       NProgress.done()
     }else{
       if(store.getters.roles.length===0){
-        store.dispatch('SetInfo').then(res=>{
+        let token:string = localStorage.loginToken
+        let data = {
+          'token':token
+        }
+        store.dispatch('GetInfo',data).then(res=>{
           router.addRoutes(asyncRouterMap)
           next({...to,replace:true})
         }).catch(()=>{

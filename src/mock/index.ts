@@ -2,7 +2,12 @@ import Mock from 'mockjs'
 
 console.log('mock mounting')
 
-require('./info')
+require('./user/info')
+require('./user/login')
+
+require('./sign/calendar')
+
+
 
 Mock.setup({
   timeout:800

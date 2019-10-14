@@ -10,3 +10,9 @@ export const responseBody:resBody = {
 export const getBody = (options:any)=>{
   return options.body && JSON.parse(options.body)
 }
+
+
+export const accessToken = (options:any)=>{
+  let body =  options.body && JSON.parse(options.body)
+  return body.accessToken || ''
+}

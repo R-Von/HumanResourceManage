@@ -59,6 +59,9 @@ export default class Sign extends Vue{
 
   private mounted(){
     console.log('SignIn  Index')
+    this.$http.get('/sign/calendar').then(res=>{
+      console.log(res)
+    })
   }
 }
 </script>

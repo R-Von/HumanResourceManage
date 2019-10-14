@@ -1,6 +1,8 @@
 <template>
   <a-card>
-    员工管理——离职申请
+    员工管理/离职申请
+
+
   </a-card>
 </template>
 

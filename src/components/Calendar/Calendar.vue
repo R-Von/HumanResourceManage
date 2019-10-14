@@ -63,11 +63,13 @@ export default class Calendar extends Vue{
     var date = new Date();
     return `${date .getFullYear()}年${date .getMonth()+1}月`
   }
-  validRanges = [moment().startOf('month'),moment()]
+  validRanges = [moment('20190801'),moment('20190820')]
   listDatas:any = []
   defaultValues:any = moment().endOf('month')
 
   setListDatas():void{
+    
+
     let state = [
       {
         type:'success',

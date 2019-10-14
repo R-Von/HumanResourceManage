@@ -1,7 +1,7 @@
 import { ActionTree , MutationTree } from 'vuex'
 import { fakeAuth } from '../../utils/fakeAuth'
 import { User } from '@/interface'
-import { login } from '@/request/api/user'
+import { login , getInfo } from '@/request/api/user'
 
 
 const state:User = {
@@ -43,35 +43,37 @@ const actions:ActionTree<any,any> = {
       })
     })
   },
-  GetInfo({ commit }){
-    return new Promise(( resolve )=>{
-      // let permission = ['dashboard','signup']
-      let permission:string[] = ['dashboard','signup']
-      let info:object = {
-        name:'Admin',
-        id:1,
-        avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
-      }
-      fakeAuth.setRole(permission)
-      commit('SET_ROLES',permission)
-      // commit('SET_INFO',info)
-      resolve()
+  GetInfo({ commit },token){
+    return new Promise(( resolve , reject)=>{
+      getInfo(token).then((res:any)=>{
+        if(res.code===200){
+          let permission:string[] = ['dashboard','signup']
+          fakeAuth.setRole(permission)
+          commit('SET_ROLES',permission)
+          commit('SET_INFO',res.data)
+          resolve('200')
+        }else{
+          reject(res)
+        }
+      }).catch(err=>{
+        reject('error')
+      })
     })
   },
-  SetInfo({commit}){
-    return new Promise((resolve)=>{
-      let permission:string[] = ['dashboard','signup']
-      let info:object = {
-        name:'Admin',
-        id:1,
-        avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
-      }
-      fakeAuth.setRole(permission)
-      commit('SET_ROLES',permission)
-      commit('SET_INFO',info)
-      resolve('set_info 200')
-    })
-  },
+  // SetInfo({commit}){
+  //   return new Promise((resolve)=>{
+  //     let permission:string[] = ['dashboard','signup']
+  //     let info:object = {
+  //       name:'Admin',
+  //       id:1,
+  //       avatar:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615831237,1510664097&fm=26&gp=0.jpg'
+  //     }
+  //     fakeAuth.setRole(permission)
+  //     commit('SET_ROLES',permission)
+  //     commit('SET_INFO',info)
+  //     resolve('set_info 200')
+  //   })
+  // },
   Logout({commit}){
     return new Promise(( resolve )=>{
       commit('SET_TOKEN', '')

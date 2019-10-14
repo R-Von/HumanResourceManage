@@ -4,30 +4,29 @@
 
 
 import Mock from 'mockjs'
-import { getBody } from './util'
+import { getBody } from '../util'
 
-const info = (option:object)=>{
-  // console.log(option)
+const info = (option:any)=>{
   const body = getBody(option)
   const responseBody = {
     code:200,
     message:"success",
     data:{}
   }
-  switch (body.account) {
-    case 'admin':
-        responseBody.data = {
-          id:'2',
-          name:'人事主管',
-          avatar:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3368007845,606219907&fm=26&gp=0.jpg',
-          department:'蚂蚁金服 - 某某某事业群 - 技术平台',
-          position:'人事主管',
-          token:'YWRtaW4=' //base64加密   staff 普通员工
-        }
+  switch (body.token) {
+    case 'YWRtaW4=':
+      responseBody.data = {
+        id:'2',
+        name:'人事主管',
+        avatar:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3368007845,606219907&fm=26&gp=0.jpg',
+        department:'蚂蚁金服 - 某某某事业群 - 技术平台',
+        position:'人事主管',
+        token:'YWRtaW4=' //base64加密   staff 普通员工
+      }
       responseBody.code = 200
       responseBody.message = '成功'
       break;
-    case 'user':
+    case 'c3RhZmY=':
       responseBody.data = {
         id:'1',
         name:'普通员工',
