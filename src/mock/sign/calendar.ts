@@ -18,12 +18,42 @@ const makeCalendar = (token:string)=>{
       content:'早退！'
     }
   ]
-
-  for(var i = 1;i<=moment().date();i++){
-    let data = [state[Math.round(Math.random()*2)],state[Math.round(Math.random()*2)]]
+  
+  // switch (token) {
+  //   case 'YWRtaW4=':
+      
+  //     break;
+  //   case 'YWRtaW4=':
+      
+  //         break;
+  //   default:
+  //     break;
+  // }
+  // if(){
     
-    listDatas.push(data)
-  }
+  // }
+  let dataList  = [
+    [state[0],state[0]],  //08 01 4
+    [state[0],state[0]],    
+    [state[0],state[0]],  //6
+    [state[1],state[0]],  //7
+    [state[0],state[2]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[2]],  //7
+    [state[0],state[0]],  //7
+    [state[1],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]],
+    [state[0],state[0]], //6
+    [state[0],state[0]], //7
+    [state[1],state[0]]
+  ]
+  return dataList
 }
 
 
@@ -35,22 +65,13 @@ const calendar = (option:object)=>{
   }
 
   let token = accessToken(option)
-
-  switch (token) {
-    case 'YWRtaW4=':
-      // responseBody.code = 200
-      // responseBody.message = '成功'
-      break;
-    case 'c3RhZmY=':
-      // responseBody.code = 200
-      // responseBody.message = '成功'
-      break;
-    default:
-      responseBody.code = 200
-      responseBody.message = '成功'
-      break;
+  let data = makeCalendar(token)
+  responseBody.data = {
+    late:'2',
+    early:'1',
+    vocation:0,
+    dateLiist:data
   }
-
   return responseBody
 }
 

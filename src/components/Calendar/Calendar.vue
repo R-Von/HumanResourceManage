@@ -1,25 +1,25 @@
 <template>
   <div class="calendar-box">
     <a-row class="calendar-header">
-      <p class="cal-hd_title"> {{Dates}}考勤日历</p>
+      <p class="cal-hd_title"> 2019年8月考勤日历</p>
       <div class="cal-hd_extra">
         <a-row>
           <a-col :span="8">
             <div class="hd-info">
               <span>迟到</span>
-              <p>0 次</p>
+              <p>{{late}} 次</p>
             </div>
           </a-col>
            <a-col :span="8">
             <div class="hd-info">
               <span>早退</span>
-              <p>0 次</p>
+              <p>{{early}} 次</p>
             </div>
           </a-col>
            <a-col :span="8">
             <div class="hd-info">
               <span>请假</span>
-              <p>0 天</p>
+              <p>{{vocation}} 天</p>
             </div>
           </a-col>
         </a-row>
@@ -27,10 +27,12 @@
     </a-row>
     <a-calendar 
       :validRange="validRanges"  
+      :defaultValue='defaultValues'
+      v-model="defaultValues"
       @select="dateSelect" 
     >
       <ul class="events" slot="dateCellRender" slot-scope="value">
-        <li v-for="(item,index) in getListData(value)" :key="index">
+        <li v-for="(item,index) in setListData(value)" :key="index">
           <a-badge :status="item.type" :text="item.content" />
         </li>
       </ul>
@@ -59,42 +61,17 @@ import { Vue , Component } from 'vue-property-decorator'
 @Component
 export default class Calendar extends Vue{
   visible:boolean = false
-  get Dates():string{
-    var date = new Date();
-    return `${date .getFullYear()}年${date .getMonth()+1}月`
-  }
   validRanges = [moment('20190801'),moment('20190820')]
   listDatas:any = []
-  defaultValues:any = moment().endOf('month')
+  defaultValues:any = moment('20190820')
+  early:string = '0'
+  late:string = '0'
+  vocation:string = '0'
 
-  setListDatas():void{
-    
 
-    let state = [
-      {
-        type:'success',
-        content:'正常!'
-      },
-      {
-        type:'warning',
-        content:'迟到！'
-      },
-      {
-        type:'error',
-        content:'早退！'
-      }
-    ]
 
-    for(var i = 1;i<=moment().date();i++){
-      let data = [state[Math.round(Math.random()*2)],state[Math.round(Math.random()*2)]]
-      
-      this.listDatas.push(data)
-    }
-
-  }
-
-  getListData(value:any){
-    if(value.month()!==new Date().getMonth()){
+  setListData(value:any){
+    if(value.month()!==7||value.day()===6||value.day()===0||value.date()>20){
       return []
     }
     return this.listDatas[value.date()-1]
@@ -103,7 +80,21 @@ export default class Calendar extends Vue{
   dateSelect(value:any):void{
     let state = this.listDatas[value.date()-1]
     console.log(state)
-    this.visible = true
+    // this.visible = true
+  }
+
+  getListDatas(){
+    this.$http.get('/sign/calendar').then((res:any)=>{
+      if(res.code===200){
+        let data = res.data
+        this.listDatas = data.dateLiist
+        this.early = data.early
+        this.late = data.late
+        this.vocation = data.vocation
+      }
+    }).catch(err=>{
+      console.log(err)
+    })
   }
 
   showModal() {
@@ -116,7 +107,9 @@ export default class Calendar extends Vue{
   }
 
   private mounted(){
-    this.setListDatas()
+    // this.setListDatas()
+    // console.log([moment('20190801'),moment('20190820')])
+    this.getListDatas()
   }
 }
 
