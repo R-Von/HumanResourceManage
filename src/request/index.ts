@@ -4,7 +4,6 @@ import Vueaxios from 'vue-axios';
 
 
 axios.interceptors.request.use((config:any)=>{
-  console.log(config)
   let token:string = localStorage.loginToken||''
   config.headers.accessToken = token
   if(config.data){
