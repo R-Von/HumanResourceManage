@@ -131,7 +131,7 @@ export const asyncRouterMap:routerItem[] = [
           {
             path:'/staff/quit',
             name:'离职申请',
-            component:()=>import(/* webpackChunkName: "user" */ '@/views/Staff/Index.vue'),
+            component:()=>import(/* webpackChunkName: "user" */ '@/views/Staff/Quit.vue'),
             meta:{ title:'离职申请',permission:['staff'],name:'staffindex',key:'6'}
           }
         ]
