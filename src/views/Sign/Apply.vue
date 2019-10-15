@@ -1,7 +1,20 @@
 <template>
+<page-views>
   <a-card>
     加班申请
+    <a-table :columns="columns" :dataSource="data" bordered>
+      <template slot="name" slot-scope="text">
+        <a href="javascript:;">{{text}}</a>
+      </template>
+      <template slot="title" slot-scope="currentPageData">
+        Header
+      </template>
+      <template slot="footer" slot-scope="currentPageData">
+        Footer
+      </template>
+    </a-table>
   </a-card>
+</page-views>
 </template>
 
 <script lang="ts">
