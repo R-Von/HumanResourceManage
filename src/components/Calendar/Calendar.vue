@@ -38,18 +38,10 @@
       </ul>
     </a-calendar>
 
-    <a-modal
-      title="Basic Modal"
-      v-model="visible"
-      @ok="handleOk"
-    >
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </a-modal>
-
+     <cal-modal :visible="visible" @confirmOK="confirmOK" @CancelCM="CancelCM"/>
   </div>
   
+ 
 </template>
 
 <script lang="ts">
@@ -57,8 +49,13 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import { Vue , Component } from 'vue-property-decorator'
+import CalModal from './CalModal.vue'
 
-@Component
+@Component({
+  components:{
+    CalModal
+  }
+})
 export default class Calendar extends Vue{
   visible:boolean = false
   validRanges = [moment('20190801'),moment('20190820')]
@@ -77,12 +74,6 @@ export default class Calendar extends Vue{
     return this.listDatas[value.date()-1]
   }
 
-  dateSelect(value:any):void{
-    let state = this.listDatas[value.date()-1]
-    console.log(state)
-    // this.visible = true
-  }
-
   getListDatas(){
     this.$http.get('/sign/calendar').then((res:any)=>{
       if(res.code===200){
@@ -97,18 +88,20 @@ export default class Calendar extends Vue{
     })
   }
 
-  showModal() {
+  dateSelect(value:any):void{
+    let state = this.listDatas[value.date()-1]
+    console.log(state)
     this.visible = true
   }
 
-  handleOk(e:any) {
-    console.log(e);
+  confirmOK():void{
+    this.visible = false
+  }
+  CancelCM():void{
     this.visible = false
   }
 
   private mounted(){
-    // this.setListDatas()
-    // console.log([moment('20190801'),moment('20190820')])
     this.getListDatas()
   }
 }
