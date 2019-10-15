@@ -1,47 +1,66 @@
 <template>
   <div class="calendar-box">
-    <a-row class="calendar-header">
-      <p class="cal-hd_title"> 2019年8月考勤日历</p>
-      <div class="cal-hd_extra">
-        <a-row>
-          <a-col :span="8">
-            <div class="hd-info">
-              <span>迟到</span>
-              <p>{{late}} 次</p>
-            </div>
-          </a-col>
-           <a-col :span="8">
-            <div class="hd-info">
-              <span>早退</span>
-              <p>{{early}} 次</p>
-            </div>
-          </a-col>
-           <a-col :span="8">
-            <div class="hd-info">
-              <span>请假</span>
-              <p>{{vocation}} 天</p>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
-    </a-row>
-    <a-calendar 
-      :validRange="validRanges"  
-      :defaultValue='defaultValues'
-      v-model="defaultValues"
-      @select="dateSelect" 
+    <a-spin wrapperClassName size="large" :spinning="loading">
+      <a-icon slot="indicator" type="loading" style="font-size: 24px" spin />
+      <a-row class="calendar-header">
+        <p class="cal-hd_title"> 2019年8月考勤日历</p>
+        <div class="cal-hd_extra">
+          <a-row>
+            <a-col :span="8">
+              <div class="hd-info">
+                <span>迟到</span>
+                <p>{{late}} 次</p>
+              </div>
+            </a-col>
+            <a-col :span="8">
+              <div class="hd-info">
+                <span>早退</span>
+                <p>{{early}} 次</p>
+              </div>
+            </a-col>
+            <a-col :span="8">
+              <div class="hd-info">
+                <span>请假</span>
+                <p>{{vocation}} 天</p>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
+      </a-row>
+      <a-calendar 
+        :validRange="validRanges"  
+        :defaultValue='defaultValues'
+        v-model="defaultValues"
+        @select="dateSelect" 
+      >
+        <ul class="events" slot="dateCellRender" slot-scope="value">
+          <li v-for="(item,index) in setListData(value)" :key="index">
+            <a-badge :status="item.icon" :text="item.content" />
+          </li>
+        </ul>
+      </a-calendar>
+    </a-spin>
+    <a-modal
+      title="打卡详情"
+      v-model="visible"
+      cancelText="取消"
+      okText="确定"
+      @ok="handleOK"
     >
-      <ul class="events" slot="dateCellRender" slot-scope="value">
-        <li v-for="(item,index) in setListData(value)" :key="index">
-          <a-badge :status="item.type" :text="item.content" />
-        </li>
-      </ul>
-    </a-calendar>
-
-     <cal-modal :visible="visible" @confirmOK="confirmOK" @CancelCM="CancelCM"/>
+      <a-form>
+        <a-form-item
+          label="签到时间"
+        >
+           {{state[0].time}}
+        </a-form-item>
+        <a-form-item
+          label="签退时间"
+        >
+           {{state[1].time}}
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
-  
- 
 </template>
 
 <script lang="ts">
@@ -49,12 +68,8 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import { Vue , Component } from 'vue-property-decorator'
-import CalModal from './CalModal.vue'
 
 @Component({
-  components:{
-    CalModal
-  }
 })
 export default class Calendar extends Vue{
   visible:boolean = false
@@ -64,8 +79,12 @@ export default class Calendar extends Vue{
   early:string = '0'
   late:string = '0'
   vocation:string = '0'
-
-
+  loading:boolean = false
+  state:any = [{
+    time:'09:00'
+  },{
+    time:'18:00'
+  }]
 
   setListData(value:any){
     if(value.month()!==7||value.day()===6||value.day()===0||value.date()>20){
@@ -75,6 +94,7 @@ export default class Calendar extends Vue{
   }
 
   getListDatas(){
+    this.loading = true
     this.$http.get('/sign/calendar').then((res:any)=>{
       if(res.code===200){
         let data = res.data
@@ -82,6 +102,7 @@ export default class Calendar extends Vue{
         this.early = data.early
         this.late = data.late
         this.vocation = data.vocation
+        this.loading = false
       }
     }).catch(err=>{
       console.log(err)
@@ -90,16 +111,15 @@ export default class Calendar extends Vue{
 
   dateSelect(value:any):void{
     let state = this.listDatas[value.date()-1]
-    console.log(state)
+    this.state = state
     this.visible = true
   }
 
-  confirmOK():void{
+  handleOK(e:any):void{
+    console.log(e)
     this.visible = false
   }
-  CancelCM():void{
-    this.visible = false
-  }
+  
 
   private mounted(){
     this.getListDatas()
@@ -184,5 +204,11 @@ export default class Calendar extends Vue{
       top: 0;
       right: 0;
     }
+  }
+  
+  .cal-modal-title{
+    color: rgba(0,0,0,.45);
+    font-size: 12px;
+    line-height: 20px;
   }
 </style>

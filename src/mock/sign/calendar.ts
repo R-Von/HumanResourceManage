@@ -6,16 +6,28 @@ const makeCalendar = (token:string)=>{
   let listDatas = []
   let state = [
     {
-      type:'success',
-      content:'正常!'
+      type:0,
+      icon:'success',
+      content:'正常!',
+      time:'08:38'
     },
     {
-      type:'warning',
-      content:'迟到！'
+      type:1,
+      icon:'success',
+      content:'正常!',
+      time:'18:23'
     },
     {
-      type:'error',
-      content:'早退！'
+      type:2,
+      icon:'warning',
+      content:'迟到！',
+      time:'09:38'
+    },
+    {
+      type:3,
+      icon:'error',
+      content:'早退！',
+      time:'17:46'
     }
   ]
   
@@ -33,25 +45,25 @@ const makeCalendar = (token:string)=>{
     
   // }
   let dataList  = [
-    [state[0],state[0]],  //08 01 4
-    [state[0],state[0]],    
-    [state[0],state[0]],  //6
-    [state[1],state[0]],  //7
-    [state[0],state[2]],
-    [state[0],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]],
+    [state[0],state[1]],  //08 01 4
+    [state[0],state[1]],    
+    [state[0],state[1]],  //6
+    [state[2],state[0]],  //7
+    [state[0],state[3]],
+    [state[0],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]],
     [state[0],state[2]],  //7
-    [state[0],state[0]],  //7
-    [state[1],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]],
-    [state[0],state[0]], //6
-    [state[0],state[0]], //7
-    [state[1],state[0]]
+    [state[0],state[1]],  //7
+    [state[2],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]],
+    [state[0],state[1]], //6
+    [state[0],state[1]], //7
+    [state[2],state[1]]
   ]
   return dataList
 }
