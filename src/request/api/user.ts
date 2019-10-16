@@ -15,7 +15,6 @@ export function login(parameter:any){
   })
 }
 
-
 /**
  * 获取用户信息接口
  * @param parameter 
