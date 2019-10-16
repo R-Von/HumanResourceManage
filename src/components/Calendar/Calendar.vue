@@ -41,7 +41,7 @@
       </a-calendar>
     </a-spin>
     <a-modal
-      title="打卡详情"
+      :title="modalTitle"
       v-model="visible"
       cancelText="取消"
       okText="确定"
@@ -50,14 +50,24 @@
       <a-form>
         <a-form-item
           label="签到时间"
+          :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }"
         >
            {{state[0].time}}
         </a-form-item>
         <a-form-item
           label="签退时间"
+          :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }"
         >
            {{state[1].time}}
         </a-form-item>
+        <a-form-item
+          v-if="state[0].type>1||state[1].type>1"
+          label="备注"
+          :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }"
+        >
+          <a-textarea placeholder="请输入备注..." :rows="4" />
+        </a-form-item>
+
       </a-form>
     </a-modal>
   </div>
@@ -85,6 +95,7 @@ export default class Calendar extends Vue{
   },{
     time:'18:00'
   }]
+  modalTitle:string = '打卡详情'
 
   setListData(value:any){
     if(value.month()!==7||value.day()===6||value.day()===0||value.date()>20){
@@ -110,6 +121,9 @@ export default class Calendar extends Vue{
   }
 
   dateSelect(value:any):void{
+    let modalTitle = value.format('l')
+    // console.log(modalTitle)
+    this.modalTitle = `${value.format('LL')} 打卡详情`
     let state = this.listDatas[value.date()-1]
     this.state = state
     this.visible = true
