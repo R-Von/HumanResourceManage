@@ -1,9 +1,9 @@
 import Mock from 'mockjs'
 import { accessToken } from '../util'
-import moment from 'moment'
+// import moment from 'moment'
 
 const makeCalendar = (token:string)=>{
-  let listDatas = []
+  // let listDatas = []
   let state = [
     {
       type:0,
@@ -31,19 +31,6 @@ const makeCalendar = (token:string)=>{
     }
   ]
   
-  // switch (token) {
-  //   case 'YWRtaW4=':
-      
-  //     break;
-  //   case 'YWRtaW4=':
-      
-  //         break;
-  //   default:
-  //     break;
-  // }
-  // if(){
-    
-  // }
   let dataList  = [
     [state[0],state[1]],  //08 01 4
     [state[0],state[1]],    

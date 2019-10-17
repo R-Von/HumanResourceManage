@@ -7,6 +7,8 @@ require('./user/login')
 
 require('./sign/calendar')
 
+require('./holiday/list')
+
 
 
 Mock.setup({

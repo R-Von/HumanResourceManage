@@ -39,7 +39,7 @@
 <style lang="scss">
 .page-header {
   background: #fff;
-  padding: 16px 32px;
+  padding: 16px 32px 0;
   border-bottom: 1px solid #e8e8e8;
 
   .breadcrumb {
