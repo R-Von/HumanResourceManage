@@ -2,38 +2,23 @@
   <page-views>
     <div class="content">
       <a-card>
-        <a-form
-          :form="form"
-          @submit="handleSubmit"
-        >
+        <a-form>
           <a-form-item
             label="离职时间："
             :label-col="{ span: 5 }"
             :wrapper-col="{ span: 12 }"
-            :bind="formItemLayout"
           >
-            <a-date-picker v-decorator="['date-picker', config]" />
+            <a-date-picker placeholder="请选择离职日期"/>
           </a-form-item>
           <a-form-item
-            label="Gender"
+            label="离职原因："
             :label-col="{ span: 5 }"
             :wrapper-col="{ span: 12 }"
           >
-            <a-select
-              v-decorator="[
-                'gender',
-                {rules: [{ required: true, message: 'Please select your gender!' }]}
-              ]"
-              placeholder="Select a option and change input text above"
-              @change="handleSelectChange"
-            >
-              <a-select-option value="male">
-                male
-              </a-select-option>
-              <a-select-option value="female">
-                female
-              </a-select-option>
-            </a-select>
+          <a-textarea
+            placeholder="请输入离职理由"
+            :autosize="{ minRows: 4, maxRows: 6 }"
+          />
           </a-form-item>
           <a-form-item
             :wrapper-col="{ span: 12, offset: 5 }"
@@ -42,7 +27,7 @@
               type="primary"
               html-type="submit"
             >
-              Submit
+              提交
             </a-button>
           </a-form-item>
         </a-form>
@@ -62,8 +47,14 @@ import { PageViews } from '@/layouts'
   }
 })  
 export default class Quit extends Vue{
+
+  
+  
+
   private mounted(){
     console.log('Staff  Index')
+    // moment
+    
   }
 }
 </script>
