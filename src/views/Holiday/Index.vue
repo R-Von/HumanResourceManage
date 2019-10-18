@@ -30,7 +30,7 @@
           </a-col>
           <a-col :span="10"></a-col>
           <a-col :span="4">
-            <a-button type="primary" style="float:right;margin-top:9px">提交请假申请</a-button>
+            <a-button type="primary" @click="addNewApply" style="float:right;margin-top:9px">提交请假申请</a-button>
           </a-col>
 
         </a-row>
@@ -61,10 +61,10 @@
         </a-tooltip>
       </template>
 
-      <template slot="operate" slot-scope="text,record">
+      <template slot="operate" slot-scope="text,record,index">
 
         <!-- <a @click="showCancel" >{{record.id}}撤销</a> -->
-        <a-button type="link" @click="showCancel"  :disabled="record.process!=0">撤销</a-button>
+        <a-button type="link" @click="showCancel(index)"  :disabled="record.process!=0">撤销</a-button>
         <a-divider type="vertical" />
         <a-button type="link" >查看详情</a-button>
       </template>
@@ -114,10 +114,22 @@ export default class Holiday extends Vue{
       console.log(err)
     })
   }
-  showCancel():void{
+  showCancel(index):void{
+    let _this = this
     this.$confirm({
-      title:'确认撤销？'
+      title:'确认？',
+      content:'是否确认撤销？',
+      onOk() {
+        _this.tableData.splice(index,1)
+        _this.$notification['success']({
+          message: '撤销成功'
+        })
+      }
     })
+  }
+
+  addNewApply():void{
+    
   }
 
   private mounted(){
