@@ -74,6 +74,8 @@
 
 <script lang="ts">
 import { Vue , Component } from 'vue-property-decorator'
+import { func1,func2 } from '@/components/HolidayList'
+
 
 @Component 
 export default class Holiday extends Vue{
@@ -102,7 +104,6 @@ export default class Holiday extends Vue{
     }
   ]
   tableData:any = []
-
 
   getListData():void{
     this.$http.get('/holiday/list').then(res=>{
@@ -135,6 +136,9 @@ export default class Holiday extends Vue{
   private mounted(){
     console.log('Holiday  Index')
     this.getListData()
+    console.log(func1())
+    console.log(func2())
+
   }
 }
 </script>
