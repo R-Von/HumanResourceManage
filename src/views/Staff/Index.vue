@@ -1,91 +1,134 @@
 <template>
   <page-views>
-    <!-- <a-table :columns="columns" :dataSource="data">
-      <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
-      <span slot="customTitle"><a-icon type="smile-o" /> Name</span>
-      <span slot="tags" slot-scope="tags">
-        <a-tag
-          v-for="tag in tags"
-          :color="tag==='loser' ? 'volcano' : (tag.length > 5 ? 'geekblue' : 'green')"
-          :key="tag"
-        >
-          {{tag.toUpperCase()}}
-        </a-tag>
-      </span>
-      <span slot="action" slot-scope="text, record">
-        <a href="javascript:;">Invite 一 {{record.name}}</a>
-        <a-divider type="vertical" />
-        <a href="javascript:;">Delete</a>
-        <a-divider type="vertical" />
-        <a href="javascript:;" class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
-      </span>
-    </a-table> -->
+    <a-card>
+      <!-- 员工列表 -->
+      <div class="table-operator">
+        <a-row type="flex" justify="space-between" align="middle">
+          <a-col :span="3">
+            <a-button type="primary" icon="plus" @click="addApply()">添加员工</a-button>
+          </a-col>
+          <a-col :span="6" :offset="8" style="text-align: right">
+            <a-input-search placeholder="请输入员工姓名" style="width: 200px" @search="onSearch" />
+          </a-col>
+        </a-row>    
+      </div>  
+      <a-table :columns="columns" :dataSource="datas" bordered :rowKey="record=>record.id">
+        <template slot="status" slot-scope="index,item">
+          <div class="staff-status">
+            <p v-if="item.status===0" class="staff-incumbency">在职</p>  
+            <p v-if="item.status===1" class="staff-quit">离职</p>  
+          </div>
+        </template>
+        <template slot="operator" slot-scope="index,item">
+          <div class="staff-operator">
+            <a-button class="edit" type="primary">编辑</a-button>
+            <a-button type="danger" ghost>删除</a-button>
+          </div>
+        </template>
+      </a-table>
+    </a-card>
   </page-views>
-  
 </template>
 
 <script lang="ts">
 import { Vue , Component } from 'vue-property-decorator'
+import { PageViews } from '@/layouts'
 
-@Component
+/**
+ * 定义员工列表数据
+ */
+interface dataItem{
+  id:number,
+  name:string,
+  addtime:string,
+  sex:string,
+  status:number,
+  birth:string,
+  tel:string
+}
 
-
+@Component({
+  components:{
+    PageViews
+  }
+})
 
 export default class Staff extends Vue{
-//  columns:any = [
-//     {
-//       dataIndex: 'name',
-//       key: 'name',
-//       slots: { title: 'customTitle' },
-//       scopedSlots: { customRender: 'name' },
-//     },
-//     {
-//       title: 'Age',
-//       dataIndex: 'age',
-//       key: 'age',
-//     },
-//     {
-//       title: 'Address',
-//       dataIndex: 'address',
-//       key: 'address',
-//     },
-//     {
-//       title: 'Tags',
-//       key: 'tags',
-//       dataIndex: 'tags',
-//       scopedSlots: { customRender: 'tags' },
-//     },
-//     {
-//       title: 'Action',
-//       key: 'action',
-//       scopedSlots: { customRender: 'action' },
-//     },
-//   ];
+  columns:any = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key:'name'
+      // scopedSlots: { customRender: 'name' },
+    },
+    {
+      title: '性别',
+      className: 'sex',
+      dataIndex: 'sex'
+    },
+    {
+      title: '入职时间',
+      className: 'addtime',
+      dataIndex: 'addtime'
+    },
+    {
+      title: '在职状态',
+      className: 'status',
+      dataIndex: 'status',
+      scopedSlots: { customRender: 'status' },
+    },
+    {
+      title: '联系电话',
+      className: 'tel',
+      dataIndex: 'tel'
+    },
+    {
+      title: '出生年月',
+      className: 'birth',
+      dataIndex: 'birth'
+    },
+    {
+      title: '操作',
+      className: 'operator',
+      dataIndex: 'operator',
+      scopedSlots: { customRender: 'operator' },
+    }
+  ]
 
-//  data:any = [
-//     {
-//       key: '1',
-//       name: 'John Brown',
-//       age: 32,
-//       address: 'New York No. 1 Lake Park',
-//       tags: ['nice', 'developer'],
-//     },
-//     {
-//       key: '2',
-//       name: 'Jim Green',
-//       age: 42,
-//       address: 'London No. 1 Lake Park',
-//       tags: ['loser'],
-//     },
-//     {
-//       key: '3',
-//       name: 'Joe Black',
-//       age: 32,
-//       address: 'Sidney No. 1 Lake Park',
-//       tags: ['cool', 'teacher'],
-//     },
-//   ];
+  datas:any = [
+    {
+      id:1,
+      name: '张三',
+      addtime:'2019-08-28',
+      sex:'女',
+      birth: '1993-08-29',
+      status: 0,
+      tel: '13800000000'
+    },
+    {
+      id:2,
+      name: '王五',
+      addtime:'2019-03-04',
+      sex:'男',
+      status:1,
+      birth: '1993-08-29',
+      tel: '13800000000'
+    },
+    {
+      id:3,
+      name: '李四',
+      addtime:'2018-12-12',
+      sex:'男',
+      status:1,
+      birth: '1993-08-29',
+      tel: '13800000000'
+    }
+  ]
 
+
+  onSearch(value) {
+    console.log(value);
+  }
   private mounted(){
     console.log('Staff  Index')
   }
@@ -93,5 +136,20 @@ export default class Staff extends Vue{
 </script>
 
 <style lang="scss" scoped>
-
+  .table-operator {
+    margin-bottom: 20px;
+  }
+  .staff-operator, .staff-status {
+    text-align: center;
+  }
+  .edit {
+    margin-right: 10px;
+  }
+  .staff-incumbency {
+    
+    color: #52c41a;
+  }
+  .staff-quit {
+    color: #f5222d;
+  }
 </style>
