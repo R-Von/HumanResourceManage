@@ -30,6 +30,13 @@ export const basicRouterMap:routerItem[] = [
       name:'nomatch',
     },
     component:()=>import(/* webpackChunkName: "user" */ '@/views/Error/404.vue')
+  },
+  {
+    path:'/about',
+    meta:{
+      name:'about',
+    },
+    component:()=>import(/* webpackChunkName: "user" */ '@/views/About.vue')
   }
   // {
   //   path:'*',
