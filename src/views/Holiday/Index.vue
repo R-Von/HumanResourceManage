@@ -62,22 +62,30 @@
       </template>
 
       <template slot="operate" slot-scope="text,record,index">
-
-        <!-- <a @click="showCancel" >{{record.id}}撤销</a> -->
         <a-button type="link" @click="showCancel(index)"  :disabled="record.process!=0">撤销</a-button>
         <a-divider type="vertical" />
         <a-button type="link" >查看详情</a-button>
       </template>
+
     </a-table>
+    <apply-modal 
+      :show="applyShow" 
+      @confirm="confirmApply" 
+      @cancel="cancelApply" 
+
+    />
   </a-card>
 </template>
 
 <script lang="ts">
 import { Vue , Component } from 'vue-property-decorator'
-import { func1,func2 } from '@/components/HolidayList'
+import ApplyModal from '@/components/HolidayList/ApplyModal.vue'
 
-
-@Component 
+@Component({
+  components:{
+    ApplyModal
+  }
+}) 
 export default class Holiday extends Vue{
   columns:any = [
     {
@@ -104,9 +112,10 @@ export default class Holiday extends Vue{
     }
   ]
   tableData:any = []
+  applyShow:boolean = false
 
   getListData():void{
-    this.$http.get('/holiday/list').then(res=>{
+    this.$http.get('/holiday/list').then((res:any)=>{
       console.log(res)
       if(res.code===200){
         this.tableData = res.data
@@ -115,7 +124,7 @@ export default class Holiday extends Vue{
       console.log(err)
     })
   }
-  showCancel(index):void{
+  showCancel(index:number):void{
     let _this = this
     this.$confirm({
       title:'确认？',
@@ -123,21 +132,32 @@ export default class Holiday extends Vue{
       onOk() {
         _this.tableData.splice(index,1)
         _this.$notification['success']({
-          message: '撤销成功'
+          message: '撤销成功',
+          description:''
         })
       }
     })
   }
 
   addNewApply():void{
-    
+    this.applyShow = true
   }
 
+  confirmApply(){
+    console.log('confirm2')
+    this.applyShow = false
+    
+
+  }
+  cancelApply(){
+    console.log('cancel2')
+    this.applyShow = false
+  }
+ 
   private mounted(){
     console.log('Holiday  Index')
     this.getListData()
-    console.log(func1())
-    console.log(func2())
+   
 
   }
 }

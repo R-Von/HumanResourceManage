@@ -37,6 +37,13 @@ export const basicRouterMap:routerItem[] = [
       name:'about',
     },
     component:()=>import(/* webpackChunkName: "user" */ '@/views/About.vue')
+  },
+  {
+    path:'/home',
+    meta:{
+      name:'home',
+    },
+    component:()=>import(/* webpackChunkName: "user" */ '@/views/Home.vue')
   }
   // {
   //   path:'*',

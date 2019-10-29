@@ -2,9 +2,13 @@
   <div class="about">
     <div>
       <h1>关系图</h1>
+      <!-- {{something}}
+      {{Object.keys(something)}} -->
+
       <div class="realtion" id="cy" ref="relation">
       
       </div> 
+
     </div>
   </div>
 </template>
@@ -19,7 +23,13 @@
     data(){
       return{
         style:cyStyles(),
-        cydata:cyDatas()
+        cydata:cyDatas(),
+        something:{
+          a:1,
+          b:2,
+          c:3,
+          d:4
+        }
       }
     },
     methods:{
