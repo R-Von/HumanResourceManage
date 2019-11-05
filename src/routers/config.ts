@@ -30,6 +30,20 @@ export const basicRouterMap:routerItem[] = [
       name:'nomatch',
     },
     component:()=>import(/* webpackChunkName: "user" */ '@/views/Error/404.vue')
+  },
+  {
+    path:'/about',
+    meta:{
+      name:'about',
+    },
+    component:()=>import(/* webpackChunkName: "user" */ '@/views/About.vue')
+  },
+  {
+    path:'/home',
+    meta:{
+      name:'home',
+    },
+    component:()=>import(/* webpackChunkName: "user" */ '@/views/Home.vue')
   }
   // {
   //   path:'*',
@@ -88,7 +102,7 @@ export const asyncRouterMap:routerItem[] = [
       {
         path:'/holiday',
         name:'请假管理',
-        component:RouteViews,
+        component:PageViews,
         meta:{title:'请假管理',name:'signup',icon:'schedule',key:'sub2'},
         redirect: '/holiday/index',
         children:[

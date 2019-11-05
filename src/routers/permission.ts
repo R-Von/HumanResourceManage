@@ -10,6 +10,7 @@ const whiteList:string[] = ['login']
 router.beforeEach((to,from,next)=>{
   NProgress.start()
   // 获取token 判断用户是否登录
+  document.title = `${to.name}--HR Management`||'HR Management'
   if(fakeAuth.authenticate()){
      //已登录
     if(to.path==='/user/login'){
